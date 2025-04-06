@@ -1,29 +1,94 @@
 # configure-ad
 
-
-<p>
-VERY END, SETTING A GROUP POLICY.
-Now to configure account lockout policy via group policy. First open group policy management console (GPMC) on the dc-1 VM. (Right click the start button -> click "run" -> type gpmc.msc -> enter. 
-Right click "mydomain.com" the domain we created, where we want to apply the policy, and click edit. 
-Navigate to the account lockout policy settings. Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Account Policies -> Account Lockout Policy.
-Now the settings are visible and can be set. Set the account lockout duration to 30 minutes, the lockout threshold to 5 attempts, and reseet account lockout counter after 10 minutes. 
-Insert the AccLock-image1 and 2 here.
-<p>
-<img width="728" alt="image" src="https://github.com/user-attachments/assets/51957803-4e27-48a2-9545-db88f5379e0a" />
+<p align="center">
+<img src="https://i.imgur.com/pU5A58S.png" alt="Microsoft Active Directory Logo"/>
 </p>
 
-Now for the new settings to apply, we can wait for the group policy to propogate automatically, or we can force an update immediately. 
-On a client machine, open commmand prompt and type gpupdate /force, then press enter. So we will login into client-1 VM as the admin (mydoman.com\jane_admin). 
-Insert AccLock-image3 here.
+<h1>On-premises Active Directory Deployed in the Cloud (Azure)</h1>
+This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines.<br />
 
-To check if the group policy is in place, log out of the admin account and try to login as user and incorrectly enter the password 5 times. I used mydomain.com\bagom.mikul and an incorrect password. 
-The account was locked after 5 attempts, the group policy is working.
-Insert AccLock-image4.
+<h2>Environments and Technologies Used</h2>
 
-Now we can go and unlock the account, back in dc-1 VM, go to the Active Directory Users and Computers -> mydomain.com -> right click _EMPLOYEES -> Find -> Type the user account you locked out (bagon.mikul) -> double click the account -> check Unlock Account.
-bagom.mikul is now unlocked.
-If we wanted to reset the password of the same account we could go into Active Directory Users and Computers, right click the account -> click Reset Password...
-Insert Accock-image5
+- Microsoft Azure (Virtual Machines/Compute)
+- Remote Desktop
+- Active Directory Domain Services
+- PowerShell
+
+<h2>Operating Systems Used </h2>
+
+- Windows Server 2022
+- Windows 10 (21H2)
+
+<h2>High-Level Deployment and Configuration Steps</h2>
+
+- Step1: Create VM for Domain controller(DC) and client-1. 
+- Step 2: Configure DC private IP address to static, set client-1 DNS setting to DC private IP address
+- Step 3: Install Active Directory, create Domain, configure for Domain admin and users.
+- Step 4: Setup remote desktop for non-admin users on client-1 and attempt connections.
+
+<h2>Virtual Machine Prerequisets</h2>
+- Make sure both VM are in same virtual network not default network
+- Both in the same region (more efficient)
+- Make sure one has a server image for operating system, this will be DC-1
+
+ 
+<h2>Deployment and Configuration Steps</h2>
+
+
+<p>
+  <strong>SETTING A GROUP POLICY</strong><br>
+  To configure the account lockout policy via Group Policy, open the Group Policy Management Console (GPMC) on the <strong>dc-1</strong> VM.<br>
+  Right-click the <strong>Start</strong> button → click <strong>Run</strong> → type <code>gpmc.msc</code> → press <strong>Enter</strong>.<br>
+
+  In the GPMC, right-click your domain (e.g., <strong>mydomain.com</strong>) and select <strong>Edit</strong>.<br>
+  Navigate to: <strong>Computer Configuration → Policies → Windows Settings → Security Settings → Account Policies → Account Lockout Policy</strong>.<br>
+
+  Once there, configure the following settings:
+</p>
+
+<ul>
+  <li><strong>Account lockout duration:</strong> 30 minutes</li>
+  <li><strong>Account lockout threshold:</strong> 5 invalid login attempts</li>
+  <li><strong>Reset account lockout counter after:</strong> 10 minutes</li>
+</ul>
+  
+<p>
+<img src="AccLock-image1.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="AccLock-image2.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+
+<p>
+  Now, for the new settings to apply, you can either wait for Group Policy to propagate automatically or force an update immediately.<br>
+  On a client machine, open <strong>Command Prompt</strong> and run: <code>gpupdate /force</code>, then press <strong>Enter</strong>.<br>
+  In this case, log in to the <strong>client-1</strong> VM as the admin account: <code>mydomain.com\jane_admin</code>.
+</p>
+<p>
+<img src="AccLock-image3.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+
+<p>
+  To verify that the Group Policy is in place, log out of the admin account and attempt to sign in as a regular user.<br>
+  Intentionally enter the wrong password <strong>five times</strong> — for example, I used <code>mydomain.com\bagom.mikul</code> with an incorrect password.<br>
+  After the fifth failed attempt, the account was locked, confirming that the Group Policy is working as expected.
+</p>
+<p>
+<img src="AccLock-image4.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+
+<p>
+  Now we can unlock the account. On the <strong>dc-1</strong> VM, open <strong>Active Directory Users and Computers</strong>.<br>
+  Navigate to: <strong>mydomain.com → _EMPLOYEES</strong>, then right-click and select <strong>Find</strong>.<br>
+  Type the locked-out username (e.g., <code>bagom.mikul</code>), double-click the account, and check <strong>Unlock Account</strong>.<br>
+  The user <code>bagom.mikul</code> is now unlocked.<br><br>
+
+  To reset the password for this account, right-click the user in <strong>Active Directory Users and Computers</strong> and select <strong>Reset Password...</strong>
+</p>
+
+<p>
+<img src="AccLock-image5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
 
 
 </p>
