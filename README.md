@@ -8,6 +8,9 @@ Right click "mydomain.com" the domain we created, where we want to apply the pol
 Navigate to the account lockout policy settings. Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Account Policies -> Account Lockout Policy.
 Now the settings are visible and can be set. Set the account lockout duration to 30 minutes, the lockout threshold to 5 attempts, and reseet account lockout counter after 10 minutes. 
 Insert the AccLock-image1 and 2 here.
+<p>
+<img width="728" alt="image" src="https://github.com/user-attachments/assets/51957803-4e27-48a2-9545-db88f5379e0a" />
+</p>
 
 Now for the new settings to apply, we can wait for the group policy to propogate automatically, or we can force an update immediately. 
 On a client machine, open commmand prompt and type gpupdate /force, then press enter. So we will login into client-1 VM as the admin (mydoman.com\jane_admin). 
