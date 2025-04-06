@@ -34,6 +34,137 @@ This tutorial outlines the implementation of on-premises Active Directory within
  
 <h2>Deployment and Configuration Steps</h2>
 
+<p>
+  To change the DNS server for <strong>client-1</strong>, go to the <strong>Virtual Machines</strong> section in the Azure portal and select <strong>client-1</strong>.<br>
+  Then navigate to: <strong>Network settings → DNS servers</strong> (under the <em>Settings</em> menu) → select <strong>Custom</strong> → enter the private IP address of <strong>DC-1</strong>.<br>
+  This will reroute DNS traffic to <strong>DC-1</strong> instead of using the default gateway provided by Azure.<br><br>
+
+  To confirm the change, log in to <strong>client-1</strong> and run the following commands in PowerShell:<br>
+  <code>ipconfig /all</code><br>
+  <code>ping 10.0.0.4</code><br>
+  These commands verify the DNS configuration and connectivity to <strong>DC-1</strong>.
+</p>
+<p>
+<img src="AD-static-dc1.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br><br>
+
+<p>
+  To change the DNS server for <strong>client-1</strong>, go to the <strong>Virtual Machines</strong> section in the Azure portal and select <strong>client-1</strong>.<br>
+  From there, navigate to: <strong>Network settings → DNS servers</strong> (under the <em>Settings</em> menu) → choose <strong>Custom</strong> → enter the private IP address of <strong>DC-1</strong>.<br>
+  This change will reroute DNS traffic to <strong>DC-1</strong> instead of the default Azure gateway.
+
+  To confirm the DNS configuration, log in to <strong>client-1</strong> and run the following PowerShell commands:<br>
+  <code>ipconfig /all</code><br>
+  <code>ping 10.0.0.4</code><br>
+  These will verify the DNS settings and confirm network connectivity to <strong>DC-1</strong>.
+</p>
+<p>
+<img src="dns-privateIP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="ad-image3.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+
+<p>
+  To make <strong>DC-1</strong> a domain controller, open <strong>Server Manager</strong> and click on <strong>Add Roles and Features</strong>.<br>
+  Click <strong>Next</strong> through the prompts until you reach the <strong>Server Roles</strong> page (as shown in the first image).<br>
+  Select <strong>Active Directory Domain Services</strong>, then continue clicking <strong>Next</strong> until you reach the <strong>Install</strong> option.<br><br>
+
+  Once installation is complete, click the flag icon in the upper-right corner of Server Manager (as shown in image two).<br>
+  Select <strong>Promote this server to a domain controller</strong>, then choose <strong>Deployment Configuration → Add a new forest</strong>, and enter your desired root domain name.<br>
+  Continue through the wizard and complete the installation.<br><br>
+
+  After installation, the VM will automatically restart. When logging back in, use your domain credentials.<br>
+  For example, to log in as user <strong>labuser</strong> within the domain <strong>mydomain.com</strong>, enter: <code>mydomain.com\labuser</code>.
+</p>
+<p>
+<img src="ad-image4.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="ad-image5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="domainlogin-image5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br><br>
+
+<p>
+  Now we want to create two folders—one for employees and another for admins—and also create a Domain Admin user.<br><br>
+
+  To create the folders, click the search bar and type <strong>Active Directory Users and Computers</strong>, then open it.<br>
+  Right-click on <strong>mydomain.com</strong> → select <strong>New → Organizational Unit</strong> → enter the folder names.<br>
+  In this case, create two organizational units: <strong>_EMPLOYEES</strong> and <strong>_ADMINS</strong>.<br><br>
+
+  To create a Domain Admin user:<br>
+  Right-click the <strong>_ADMINS</strong> folder → select <strong>New → User</strong> → fill out the user details.<br>
+  For this example, we create a user named <strong>jane_admin</strong>. Click <strong>Next</strong>, then set a password when prompted.<br><br>
+
+  Once the user is created, right-click on <strong>jane_admin</strong> → select <strong>Properties</strong> → go to the <strong>Member Of</strong> tab → click <strong>Add</strong> → type <code>Domain Admins</code> → click <strong>Check Names</strong> → then <strong>OK</strong>, <strong>Apply</strong>, and <strong>OK</strong> again.
+
+  Jane_admin is now officially part of the <strong>Domain Admins</strong> group.
+</p>
+<p>
+<img src="ad-image6.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="ad-image7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="ad-image8.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br><br>
+
+<p>
+  The next step is to add <strong>Client-1</strong> to our domain.<br>
+  Log in to the VM using your initial user account (in this case, <code>labuser</code>).<br>
+  Go to <strong>Settings → Rename this PC (advanced)</strong> → click <strong>Change</strong> → select <strong>Domain</strong> and enter your domain name (e.g., <code>mydomain.com</code>) → click <strong>OK</strong>.
+
+  This process adds <strong>Client-1</strong> to the domain <strong>mydomain.com</strong>.<br>
+  To confirm the change, go back to the Domain Controller VM.<br>
+  Open <strong>Active Directory Users and Computers</strong> → click on the <strong>Computers</strong> folder → you should see <strong>Client-1</strong> listed there.
+</p>
+<p>
+<img src="ad-image9.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="ad-image10.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br><br>
+
+<p>
+  In this step, we want to grant remote access to <strong>Client-1</strong> for all users in the domain.<br>
+  Log in to <strong>Client-1</strong> as the admin user (e.g., <code>Jane_admin</code>).<br>
+  Go to <strong>Settings → Remote Desktop</strong> (found on the right side of the page) → click <strong>Select users that can remotely access this PC</strong> → click <strong>Add</strong> and enter <strong>Domain Users</strong> → click <strong>OK</strong>.<br><br>
+
+  This grants remote desktop access to all domain users. You can now create additional user accounts that will be able to connect to <strong>Client-1</strong> remotely.
+</p>
+<p>
+<img src="ad-image13.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br><br>
+
+<p>
+  To create users in bulk, we can use a PowerShell script. Here's how to do it:<br><br>
+
+  Log in to <strong>DC-1</strong> as an admin → open <strong>PowerShell ISE</strong> → go to <strong>File → New</strong> → paste the script into the editor → click <strong>Run Script</strong>.<br><br>
+
+  If executed correctly, the script will generate user accounts. To confirm, open <strong>Active Directory Users and Computers</strong> and navigate to the <strong>_EMPLOYEES</strong> folder — the new accounts should appear there.<br><br>
+
+  <strong>Note:</strong> In this example, the script creates <strong>100 user accounts</strong>, all using the password <code>Password1</code>. The users will be imported into the <strong>_EMPLOYEES</strong> organizational unit, so it's important that this folder exists and is named correctly.<br><br>
+
+  Finally, to verify that the accounts work, try logging into <strong>Client-1</strong> via <strong>Remote Desktop</strong> using one of the new users. For example:<br>
+  <strong>Username:</strong> <code>mydomain.com\big.sapir</code><br>
+  <strong>Password:</strong> <code>Password1</code>
+</p>
+<p>
+<img src="ad-image14.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+<img src="ad-image15.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<br><br>
+
 
 <p>
   <strong>SETTING A GROUP POLICY</strong><br>
