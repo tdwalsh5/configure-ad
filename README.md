@@ -26,10 +26,12 @@ This tutorial outlines the implementation of on-premises Active Directory within
 - Step 3: Install Active Directory, create Domain, configure for Domain admin and users.
 - Step 4: Setup remote desktop for non-admin users on client-1 and attempt connections.
 
-<h2>Virtual Machine Prerequisets</h2>
-- Make sure both VM are in same virtual network not default network
-- Both in the same region (more efficient)
-- Make sure one has a server image for operating system, this will be DC-1
+<h2>Virtual Machine Prerequisites</h2>
+<ul>
+  <li>Make sure both VMs are in the same virtual network (not the default network)</li>
+  <li>Both should be in the same region (more efficient)</li>
+  <li>Ensure one VM uses a server image for the operating system, this will be <strong>DC-1</strong></li>
+</ul>
 
  
 <h2>Deployment and Configuration Steps</h2>
@@ -114,7 +116,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <p>
   The next step is to add <strong>Client-1</strong> to our domain.<br>
-  Log in to the VM using your initial user account (in this case, <code>labuser</code>).<br>
+  Log in to the client-1 VM using your initial user account (in this case, <code>labuser</code>).<br>
   Go to <strong>Settings → Rename this PC (advanced)</strong> → click <strong>Change</strong> → select <strong>Domain</strong> and enter your domain name (e.g., <code>mydomain.com</code>) → click <strong>OK</strong>.
 
   This process adds <strong>Client-1</strong> to the domain <strong>mydomain.com</strong>.<br>
@@ -131,7 +133,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <p>
   In this step, we want to grant remote access to <strong>Client-1</strong> for all users in the domain.<br>
-  Log in to <strong>Client-1</strong> as the admin user (e.g., <code>Jane_admin</code>).<br>
+  Log in to <strong>Client-1</strong> as the admin user (e.g., <code>jane_admin</code>).<br>
   Go to <strong>Settings → Remote Desktop</strong> (found on the right side of the page) → click <strong>Select users that can remotely access this PC</strong> → click <strong>Add</strong> and enter <strong>Domain Users</strong> → click <strong>OK</strong>.<br><br>
 
   This grants remote desktop access to all domain users. You can now create additional user accounts that will be able to connect to <strong>Client-1</strong> remotely.
@@ -144,14 +146,14 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <p>
   To create users in bulk, we can use a PowerShell script. Here's how to do it:<br><br>
 
-  Log in to <strong>DC-1</strong> as an admin → open <strong>PowerShell ISE</strong> → go to <strong>File → New</strong> → paste the script into the editor → click <strong>Run Script</strong>.<br><br>
+  Log in to <strong>DC-1</strong> as an admin (mydomain.com\jane_admin) → open <strong>PowerShell ISE</strong> → go to <strong>File → New</strong> → paste the script into the editor → click <strong>Run Script</strong>.<br><br>
 
   If executed correctly, the script will generate user accounts. To confirm, open <strong>Active Directory Users and Computers</strong> and navigate to the <strong>_EMPLOYEES</strong> folder — the new accounts should appear there.<br><br>
 
-  <strong>Note:</strong> In this example, the script creates <strong>100 user accounts</strong>, all using the password <code>Password1</code>. The users will be imported into the <strong>_EMPLOYEES</strong> organizational unit, so it's important that this folder exists and is named correctly.<br><br>
+  <strong>Note:</strong> In this example, the script creates <strong>10000 user accounts</strong>, all using the password <code>Password1</code>. The users will be imported into the <strong>_EMPLOYEES</strong> organizational unit, so it's important that this folder exists and is named correctly.<br><br>
 
   Finally, to verify that the accounts work, try logging into <strong>Client-1</strong> via <strong>Remote Desktop</strong> using one of the new users. For example:<br>
-  <strong>Username:</strong> <code>mydomain.com\big.sapir</code><br>
+  <strong>Username:</strong> <code>mydomain.com\bagom.mikul</code><br>
   <strong>Password:</strong> <code>Password1</code>
 </p>
 <p>
@@ -164,7 +166,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 
 <p>
-  <strong>SETTING A GROUP POLICY</strong><br>
+  <h2>SETTING A GROUP POLICY</h2><br>
   To configure the account lockout policy via Group Policy, open the Group Policy Management Console (GPMC) on the <strong>dc-1</strong> VM.<br>
   Right-click the <strong>Start</strong> button → click <strong>Run</strong> → type <code>gpmc.msc</code> → press <strong>Enter</strong>.<br>
 
