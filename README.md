@@ -35,14 +35,10 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <h2>Deployment and Configuration Steps</h2>
 
 <p>
-  To change the DNS server for <strong>client-1</strong>, go to the <strong>Virtual Machines</strong> section in the Azure portal and select <strong>client-1</strong>.<br>
-  Then navigate to: <strong>Network settings → DNS servers</strong> (under the <em>Settings</em> menu) → select <strong>Custom</strong> → enter the private IP address of <strong>DC-1</strong>.<br>
-  This will reroute DNS traffic to <strong>DC-1</strong> instead of using the default gateway provided by Azure.<br><br>
+  After creating the virtual machines, we need to set <strong>DC-1</strong>'s IP address to <strong>static</strong> to ensure it doesn’t change.<br>
+  To do this, go to the Azure portal → click <strong>Virtual Machines</strong> → select <strong>DC-1</strong> → navigate to <strong>Network settings → IP configurations</strong> → click on <strong>ipconfig1</strong> → set the IP assignment to <strong>Static</strong>.<br><br>
 
-  To confirm the change, log in to <strong>client-1</strong> and run the following commands in PowerShell:<br>
-  <code>ipconfig /all</code><br>
-  <code>ping 10.0.0.4</code><br>
-  These commands verify the DNS configuration and connectivity to <strong>DC-1</strong>.
+  <strong>Note:</strong> For this setup to work smoothly during testing, make sure to disable the Microsoft Firewall by logging into <strong>DC-1</strong> and turning it off.
 </p>
 <p>
 <img src="AD-static-dc1.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
