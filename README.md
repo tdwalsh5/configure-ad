@@ -61,6 +61,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <p>
 <img src="ad-image3.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
+<br><br>
 
 <p>
   To make <strong>DC-1</strong> a domain controller, open <strong>Server Manager</strong> and click on <strong>Add Roles and Features</strong>.<br>
