@@ -122,10 +122,10 @@ This tutorial outlines the implementation of on-premises Active Directory within
   Open <strong>Active Directory Users and Computers</strong> → click on the <strong>Computers</strong> folder → you should see <strong>Client-1</strong> listed there.
 </p>
 <p>
-<img src="ad-image10.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image10.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-<img src="ad-image9.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image11.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <br><br>
 
