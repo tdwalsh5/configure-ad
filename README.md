@@ -59,7 +59,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 <img src="dns-privateIP.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-<img src="ad-image3.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="dnsPingfromClient1.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <br><br>
 
@@ -76,10 +76,10 @@ This tutorial outlines the implementation of on-premises Active Directory within
   For example, to log in as user <strong>labuser</strong> within the domain <strong>mydomain.com</strong>, enter: <code>mydomain.com\labuser</code>.
 </p>
 <p>
-<img src="ad-image4.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image3.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-<img src="ad-image5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image4.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
 <img src="domainlogin-image5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
@@ -102,13 +102,13 @@ This tutorial outlines the implementation of on-premises Active Directory within
   Jane_admin is now officially part of the <strong>Domain Admins</strong> group.
 </p>
 <p>
-<img src="ad-image6.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image6.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-<img src="ad-image7.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image7.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-<img src="ad-image8.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image8.PNG" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <br><br>
 
@@ -122,10 +122,10 @@ This tutorial outlines the implementation of on-premises Active Directory within
   Open <strong>Active Directory Users and Computers</strong> → click on the <strong>Computers</strong> folder → you should see <strong>Client-1</strong> listed there.
 </p>
 <p>
-<img src="ad-image9.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image10.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-<img src="ad-image10.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="ad-image9.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <br><br>
 
